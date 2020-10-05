@@ -9,9 +9,11 @@
 <div>
     <h1>1. Create Order</h1>
     <form action="#" th:action="@{/create-order}" th:object="${orderForm}" method="POST">
-        <input type="text" placeholder="Amount" th:field="*{amount}" name="amount" value="amount">
-        <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Value cannot be less than 100</span>
-        <button type="submit">Create Order</button>
+        <input type="text" placeholder="Amount (in Paise)" th:field="*{amount}" name="amount" value="amount">
+        <span th:if="${#fields.hasErrors('amount')}">Amount cannot be less than 100(1 Rs.)</span>
+        <br/>
+        <br/>
+        <button type="submit" style="padding:10px;">Create Order</button>
     </form>
 </div>
 </body>
