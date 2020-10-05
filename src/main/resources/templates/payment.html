@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trying RazorPay; 1. Create Order</title>
+</head>
+<body>
+<div>
+    <h1>2. Make Payment here</h1>
+    <form action="/success" method="POST">
+        <script
+                th:data-amount="${amount}"
+                data-buttontext="Pay with Razorpay"
+                data-currency="INR"
+                data-description="Test transaction"
+                data-image="https://example.com/your_logo.jpg"
+                data-key="rzp_test_cjiZ7kyueJCUGb"
+                data-name="Acme Corp"
+                th:data-order_id="${orderId}"
+                data-prefill.contact="9999999999"
+                data-prefill.email="gaurav.kumar@example.com"
+                data-prefill.name="Gaurav Kumar"
+                data-theme.color="#F37254"
+                src="https://checkout.razorpay.com/v1/checkout.js"
+        ></script>
+        <input custom="Hidden Element" name="hidden" type="hidden">
+    </form>
+</div>
+</body>
+</html>
