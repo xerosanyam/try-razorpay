@@ -1,11 +1,11 @@
-#Try Razorpay
+# Try Razorpay
 #### [Heroku Link](https://try-razorpay.herokuapp.com/)
 #### [Database Design Diagram](https://dbdiagram.io/d/5f7b2d673a78976d7b76649e)
 #
 ### Build Instructions
 ##### Install
 `./mvnw clean install`
-##### Test locally
+##### Test locally (after installing heroku-cli)
 `heroku local web`
 ##### Deploy on Heroku
 `git push heroku master`
