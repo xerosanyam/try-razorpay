@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Trying RazorPay</title>
+    <style>
+        .error-msg{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <h1>Trying Razorpay</h1>
@@ -10,7 +15,7 @@
     <h1>1. Create Order</h1>
     <form action="#" th:action="@{/create-order}" th:object="${orderForm}" method="POST">
         <input type="text" placeholder="Amount (in Paise)" th:field="*{amount}" name="amount" value="amount">
-        <span th:if="${#fields.hasErrors('amount')}">Amount cannot be less than 100(1 Rs.)</span>
+        <span class="error-msg" th:if="${#fields.hasErrors('amount')}"> Amount cannot be less than 100(1 Rs.)</span>
         <br/>
         <br/>
         <button type="submit" style="padding:10px;">Create Order</button>
