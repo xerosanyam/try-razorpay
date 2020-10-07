@@ -26,7 +26,13 @@ public class BackendController {
     public ResponseEntity webhook(@RequestBody Event event) {
         log.info(event.toString());
         if (event.entity.equals("event") && event.getPayload().getPayment().getEntity().captured) {
-            log.info("Write to db here", event.getPayload().getPayment().getEntity().order_id);
+            try {
+            ProductOrder order = repository.findById(event.getPayload().getPayment().getEntity().order_id);
+            order.setCompleted(true);
+            repository.save(order);
+            }catch (Exception e){
+                log.error(e.toString());
+            }
         }
         return ResponseEntity.ok("Thanks!");
     }
