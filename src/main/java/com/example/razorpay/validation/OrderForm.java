@@ -1,4 +1,4 @@
-package com.example.razorpay.model;
+package com.example.razorpay.validation;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

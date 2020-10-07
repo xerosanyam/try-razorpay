@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trying Razorpay - See all orders</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>
+            Order ID
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Completed
+        </th>
+    </tr>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.amount}"></td>
+        <td th:text="${order.completed}"></td>
+    </tr>
+</table>
+</body>
+</html>

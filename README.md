@@ -1,6 +1,7 @@
 # Try Razorpay
 #### [Heroku Link](https://try-razorpay.herokuapp.com/)
-#### [Database Design Diagram](https://dbdiagram.io/d/5f7b2d673a78976d7b76649e)
+#### [Database Schema](https://dbdiagram.io/d/5f7b2d673a78976d7b76649e)
+#### [Documentation](https://docs.google.com/document/d/1ouVlnpOFs5SfsII1lRyEzwa709KprtC8sH65MDfsH94/edit?usp=sharing)
 #
 ### Build Instructions
 ##### Install

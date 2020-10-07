@@ -2,24 +2,24 @@ package com.example.razorpay.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
 public class ProductOrder {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private double amount;
+    private String id;
+    private int amount;
 
-    public ProductOrder(double amount) {
-        this.amount = amount;
-    }
+    @Column(columnDefinition = "boolean default false")
+    private boolean completed;
 
     protected ProductOrder() {
 
+    }
+
+    public ProductOrder(String id, int amount) {
+        this.id = id;
+        this.amount = amount;
     }
 }

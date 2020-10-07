@@ -1,12 +1,15 @@
 package com.example.razorpay.controller;
 
-import com.example.razorpay.model.OrderForm;
+import com.example.razorpay.model.ProductOrder;
+import com.example.razorpay.repository.OrderRepository;
+import com.example.razorpay.validation.OrderForm;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -22,6 +25,9 @@ public class PaymentController {
     private final Logger log = LoggerFactory.getLogger(com.example.razorpay.RazorpayApplication.class);
     RazorpayClient razorpayClient;
 
+    @Autowired
+    OrderRepository repository;
+
     PaymentController() {
         try {
             razorpayClient = new RazorpayClient("rzp_test_cjiZ7kyueJCUGb", "fG0zEeXUiJKNbggEKRhsJf0k");
@@ -30,6 +36,9 @@ public class PaymentController {
         }
     }
 
+    /*
+    Shows the index page; Starting point of the app
+     */
     @GetMapping("/")
     public String showIndexPage(Model model) {
         OrderForm orderForm = new OrderForm();
@@ -37,7 +46,9 @@ public class PaymentController {
         return "index";
     }
 
-
+    /*
+    Once user fills the index page form, the values are validated.
+     */
     @PostMapping("/create-order")
     public String createOrder(@Valid OrderForm orderForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -45,10 +56,9 @@ public class PaymentController {
         }
         log.info(orderForm.toString());
 
-        int amount = orderForm.getAmount();
         JSONObject options = new JSONObject();
-        options.put("amount", amount);
-        options.put("currency", "INR"); // mandatory field in Razorpay API
+        options.put("amount", orderForm.getAmount());
+        options.put("currency", orderForm.getCurrency());
 
         Order order;
         try {
@@ -58,7 +68,15 @@ public class PaymentController {
             e.printStackTrace();
             return String.format("Unable to create order!");
         }
-        model.addAttribute("amount", amount);
+
+        try {
+            repository.save(new ProductOrder(order.get("id"), order.get("amount")));
+            log.info("Written to DB!");
+        } catch (Exception e) {
+            log.error(e.toString());
+        }
+
+        model.addAttribute("amount", order.get("amount"));
         model.addAttribute("orderId", order.get("id"));
         return "payment";
     }
@@ -66,12 +84,6 @@ public class PaymentController {
     @PostMapping("/success")
     public String success(@RequestParam MultiValueMap success, Model model) {
         model.addAttribute("result", success);
-        return "success";
-    }
-
-    @PostMapping("/error")
-    public String error(@RequestParam MultiValueMap error, Model model) {
-        model.addAttribute("result", error);
         return "success";
     }
 }
