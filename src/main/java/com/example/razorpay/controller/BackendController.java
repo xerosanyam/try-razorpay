@@ -51,7 +51,11 @@ public class BackendController {
         } catch (Exception e) {
             log.error(e.toString());
         }
-
         return orders;
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity status(Model model) {
+        return ResponseEntity.ok("Ok!");
     }
 }
