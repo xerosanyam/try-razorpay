@@ -1,6 +1,7 @@
 package com.example.razorpay.controller;
 
 import com.example.razorpay.model.ProductOrder;
+import com.example.razorpay.model.Razorpay.Entity;
 import com.example.razorpay.model.Razorpay.Event;
 import com.example.razorpay.repository.OrderRepository;
 import org.slf4j.Logger;
@@ -25,11 +26,15 @@ public class BackendController {
     @PostMapping("/webhook")
     public ResponseEntity webhook(@RequestBody Event event) {
         log.info(event.toString());
-        if (event.entity.equals("event") && event.getPayload().getPayment().getEntity().captured) {
+        Entity entity = event.getPayload().getPayment().getEntity();
+        if (event.entity.equals("event") && entity.captured) {
             try {
-            ProductOrder order = repository.findById(event.getPayload().getPayment().getEntity().order_id);
-            order.setCompleted(true);
-            repository.save(order);
+            ProductOrder order = repository.findById(entity.order_id);
+            // Validate that amount is same.
+            if(order.getAmount()==entity.amount){
+                order.setCompleted(true);
+                repository.save(order);
+            }
             }catch (Exception e){
                 log.error(e.toString());
             }

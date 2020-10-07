@@ -4,6 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/*
+ Our Model for product_order table
+*/
 @Data
 @Entity
 public class ProductOrder {
